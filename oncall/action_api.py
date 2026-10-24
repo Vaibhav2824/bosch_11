@@ -30,7 +30,9 @@ PORT = int(os.getenv("ACTION_API_PORT", "8090"))
 PROJECT = os.getenv("COMPOSE_PROJECT", "opentelemetry-demo")
 LOCUST = os.getenv("LOCUST_URL", "http://localhost:8080/loadgen")
 LOG = Path(os.getenv("ACTION_API_LOG", "logs/action_api.jsonl"))
-NEVER_TOUCH = ("flagd", "flagd-ui")  # feature flags are off limits (Rule 6)
+# feature flags are off limits (Rule 6); restarting the telemetry stack would blind the agent
+NEVER_TOUCH = ("flagd", "flagd-ui", "otel-collector", "jaeger", "prometheus", "grafana",
+               "opensearch", "load-generator")
 KILL_FILE = Path(os.getenv("UI_KILL_FILE", "KILL"))  # same file the approval UI sets
 
 

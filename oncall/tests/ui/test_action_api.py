@@ -51,3 +51,10 @@ def test_action_api_refuses_everything_while_kill_switch_is_on(monkeypatch, tmp_
     monkeypatch.setattr(action_api, "KILL_FILE", kill)
     code, res = action_api.execute(body())
     assert code == 423 and res["status"] == "refused"
+
+
+def test_action_api_never_restarts_the_telemetry_stack():
+    for target in ["otel-collector", "jaeger", "prometheus", "opensearch"]:
+        p = {**PAYLOAD, "target": target}
+        code, res = action_api.execute(body(payload=p, fingerprint=approval.fingerprint(p)))
+        assert code == 400 and res["status"] == "refused"
