@@ -1,0 +1,4 @@
+litellm>=1.40
+requests>=2.31
+pydantic>=2.6
+mcp>=1.0  # litellm 1.106 imports it on every tool call
