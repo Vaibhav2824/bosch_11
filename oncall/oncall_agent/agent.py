@@ -122,8 +122,8 @@ def investigate(alert: str, verbose: bool = True):
     result = None
 
     for step in range(1, config.MAX_STEPS + 3):
-        last = step == config.MAX_STEPS
-        if last:
+        last = step >= config.MAX_STEPS  # from here on, only submit_diagnosis is offered
+        if step == config.MAX_STEPS:
             messages.append({"role": "user", "content": "Final step: call submit_diagnosis now with the evidence "
                                                         "you have. Use decision=escalate if unsure."})
         resp = None
