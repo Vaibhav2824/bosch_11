@@ -121,3 +121,4 @@ names it uses the step's `description`/`relevance` from your agent, or "Ran <too
   shows "waiting for Action API" (runs mode) or your agent's reply (http mode).
 - The http source asks for each incident to build the list (fine for tens, not thousands).
 - The http source has only been exercised against a stand-in agent API, not a production one.
+ls -la ~/.ssh
