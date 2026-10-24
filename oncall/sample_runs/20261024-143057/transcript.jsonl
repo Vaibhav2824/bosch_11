@@ -1,0 +1,12 @@
+{"t": "14:30:57", "kind": "alert", "alert": "erroe alert:cpu starved", "model": "gemini/gemini-3-flash-preview"}
+{"t": "14:30:59", "kind": "tool", "step": 1, "name": "service_overview", "args": {"window": "2m"}, "evidence_id": "ev_1"}
+{"t": "14:31:05", "kind": "tool", "step": 2, "name": "container_health", "args": {"service": ""}, "evidence_id": "ev_2"}
+{"t": "14:31:07", "kind": "tool", "step": 3, "name": "container_health", "args": {"service": "email"}, "evidence_id": "ev_3"}
+{"t": "14:31:11", "kind": "tool", "step": 4, "name": "container_health", "args": {"service": "ad"}, "evidence_id": "ev_4"}
+{"t": "14:31:14", "kind": "tool", "step": 5, "name": "container_health", "args": {"service": "cart"}, "evidence_id": "ev_5"}
+{"t": "14:31:18", "kind": "tool", "step": 6, "name": "container_health", "args": {"service": "accounting"}, "evidence_id": "ev_6"}
+{"t": "14:31:20", "kind": "tool", "step": 7, "name": "search_logs", "args": {"minutes": 10, "level": "error"}, "evidence_id": "ev_7"}
+{"t": "14:31:28", "kind": "tool", "step": 8, "name": "container_health", "args": {"service": "otelcol-contrib"}, "evidence_id": "ev_8"}
+{"t": "14:31:33", "kind": "tool", "step": 9, "name": "container_health", "args": {"service": ""}, "evidence_id": "ev_9"}
+{"t": "14:31:34", "kind": "tool", "step": 10, "name": "get_traces", "args": {"service": "ad", "kind": "slow"}, "evidence_id": "ev_10"}
+{"t": "14:31:34", "kind": "diagnosis", "decision": "escalate", "confidence": 0.0, "note": "budget exhausted"}

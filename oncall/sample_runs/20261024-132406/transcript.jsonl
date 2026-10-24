@@ -1,0 +1,8 @@
+{"t": "13:24:06", "kind": "alert", "alert": "Alert fired: error rate above threshold on the shop", "model": "gemini/gemini-3-flash-preview"}
+{"t": "13:24:08", "kind": "tool", "step": 1, "name": "service_overview", "args": {"window": "2m"}, "evidence_id": "ev_1"}
+{"t": "13:24:10", "kind": "tool", "step": 2, "name": "get_traces", "args": {"kind": "errors", "service": "recommendation"}, "evidence_id": "ev_2"}
+{"t": "13:24:12", "kind": "tool", "step": 3, "name": "container_health", "args": {"service": "product-catalog"}, "evidence_id": "ev_3"}
+{"t": "13:24:13", "kind": "tool", "step": 4, "name": "get_traces", "args": {"service": "checkout", "kind": "errors"}, "evidence_id": "ev_4"}
+{"t": "13:24:16", "kind": "tool", "step": 5, "name": "search_logs", "args": {"service": "product-catalog"}, "evidence_id": "ev_5"}
+{"t": "13:24:17", "kind": "tool", "step": 6, "name": "search_logs", "args": {"level": "any", "service": "product-catalog"}, "evidence_id": "ev_6"}
+{"t": "13:24:20", "kind": "diagnosis", "decision": "diagnosed", "confidence": 0.8}

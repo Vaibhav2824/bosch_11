@@ -12,7 +12,6 @@ variables, and one mapping function translates your agent's JSON.
 incident_ui/      Python server (stdlib only): config, approval gate, sources, demo stack
 web/              React + SmoothUI front end (build once, the server serves it)
 sample_runs/      three real incidents from our agent, to try it with no agent running
-examples/         mock_agent_api.py: a stand-in agent API with the plan's data model
 tests/            approval gate, server guardrails, mapper (pytest)
 .env.example      every setting with its default
 ```
@@ -53,8 +52,7 @@ UI_AGENT_API_DECIDE=/incidents/{id}/{decision} python -m incident_ui
 Change `UI_AGENT_API_LIST / GET / CREATE / DECIDE` if your paths differ (see `.env.example`).
 With `DECIDE` set, approve and reject are POSTed to your agent with
 `{approver, payload, fingerprint, note}`, so your own state machine moves on. Your agent then
-calls the Action API, not the UI. To see this working first:
-`python examples/mock_agent_api.py` in one terminal, the command above in another.
+calls the Action API, not the UI.
 
 ## 3. If your JSON looks different
 
