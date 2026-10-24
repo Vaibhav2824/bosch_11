@@ -31,6 +31,7 @@ PROJECT = os.getenv("COMPOSE_PROJECT", "opentelemetry-demo")
 LOCUST = os.getenv("LOCUST_URL", "http://localhost:8080/loadgen")
 LOG = Path(os.getenv("ACTION_API_LOG", "logs/action_api.jsonl"))
 NEVER_TOUCH = ("flagd", "flagd-ui")  # feature flags are off limits (Rule 6)
+KILL_FILE = Path(os.getenv("UI_KILL_FILE", "KILL"))  # same file the approval UI sets
 
 
 def fingerprint(payload: dict) -> str:  # same as incident_ui.approval.fingerprint
@@ -83,6 +84,8 @@ ACTIONS = {
 def execute(body: dict) -> tuple[int, dict]:
     payload = body.get("payload") if isinstance(body.get("payload"), dict) else {}
     action, target = str(payload.get("action", "")), str(payload.get("target", ""))
+    if KILL_FILE.exists():
+        return 423, {"status": "refused", "detail": "kill switch is on: remove the KILL file to allow actions"}
     if not str(body.get("approver", "")).strip():
         return 403, {"status": "refused", "detail": "no approver: every action needs a human approval"}
     if body.get("fingerprint") != fingerprint(payload):

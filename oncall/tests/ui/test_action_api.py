@@ -43,3 +43,11 @@ def test_no_recovery_within_timeout_is_unconfirmed(monkeypatch):
     assert approval.verify("runs/r1", PAYLOAD)["event"] == "recovery_unconfirmed"
     assert approval.verification("runs/r1")["event"] == "recovery_unconfirmed"
     assert approval.final_decision("runs/r1") is None  # verification never closes the gate
+
+
+def test_action_api_refuses_everything_while_kill_switch_is_on(monkeypatch, tmp_path):
+    kill = tmp_path / "KILL"
+    kill.write_text("on")
+    monkeypatch.setattr(action_api, "KILL_FILE", kill)
+    code, res = action_api.execute(body())
+    assert code == 423 and res["status"] == "refused"
