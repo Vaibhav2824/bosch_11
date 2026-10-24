@@ -1,0 +1,97 @@
+{
+  "checkout": {
+    "rps": 0.48,
+    "error_pct": 0.0,
+    "p95_ms": 1020.0
+  },
+  "fraud-detection": {
+    "rps": 0.07,
+    "error_pct": 0.0,
+    "p95_ms": 80.0
+  },
+  "image-provider": {
+    "rps": 1.62,
+    "error_pct": 0.0,
+    "p95_ms": 2.0
+  },
+  "payment": {
+    "rps": 0.07,
+    "error_pct": 0.0,
+    "p95_ms": 60.0
+  },
+  "currency": {
+    "rps": 0.53,
+    "error_pct": 0.0,
+    "p95_ms": 2.0
+  },
+  "flagd": {
+    "rps": 8.77,
+    "error_pct": 0.0,
+    "p95_ms": 9.0
+  },
+  "email": {
+    "rps": 0.13,
+    "error_pct": 0.0,
+    "p95_ms": 120.0
+  },
+  "frontend": {
+    "rps": 15.39,
+    "error_pct": 0.0,
+    "p95_ms": 1681.0
+  },
+  "recommendation": {
+    "rps": 1.16,
+    "error_pct": 0.0,
+    "p95_ms": 2525.0
+  },
+  "product-catalog": {
+    "rps": 5.23,
+    "error_pct": 0.0,
+    "p95_ms": 1454.0
+  },
+  "shipping": {
+    "rps": 0.21,
+    "error_pct": 0.0,
+    "p95_ms": 75.0
+  },
+  "ad": {
+    "rps": 0.41,
+    "error_pct": 0.0,
+    "p95_ms": 36.0
+  },
+  "cart": {
+    "rps": 2.13,
+    "error_pct": 0.0,
+    "p95_ms": 53.0
+  },
+  "accounting": {
+    "rps": 0.1,
+    "error_pct": 0.0,
+    "p95_ms": 15000.0
+  },
+  "frontend-web": {
+    "rps": 0.25,
+    "error_pct": 0.0,
+    "p95_ms": 172.0
+  },
+  "frontend-proxy": {
+    "rps": 13.72,
+    "error_pct": 0.0,
+    "p95_ms": 1274.0
+  },
+  "quote": {
+    "rps": 0.26,
+    "error_pct": 0.0,
+    "p95_ms": 36.0
+  },
+  "telemetry-docs": {
+    "rps": 0.19,
+    "error_pct": 0.0,
+    "p95_ms": 2.0
+  },
+  "flagd-ui": {
+    "rps": 0.0,
+    "error_pct": 0.0,
+    "p95_ms": null
+  }
+}
