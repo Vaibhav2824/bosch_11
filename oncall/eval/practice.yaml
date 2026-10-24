@@ -1,0 +1,34 @@
+# Provisional offline fixtures derived from the public briefing categories.
+# Replace these entries with organiser bundles when they are supplied.
+schema: provisional-v0
+incidents:
+  - id: app-payment-charge-failure
+    bundle: bundles/app-payment-charge-failure
+    category: application
+  - id: app-cart-intermittent-failure
+    bundle: bundles/app-cart-intermittent-failure
+    category: application
+  - id: app-catalog-single-product-failure
+    bundle: bundles/app-catalog-single-product-failure
+    category: application
+  - id: app-recommendation-memory-growth
+    bundle: bundles/app-recommendation-memory-growth
+    category: application
+  - id: app-ad-cpu-gc-pressure
+    bundle: bundles/app-ad-cpu-gc-pressure
+    category: application
+  - id: app-homepage-traffic-flood
+    bundle: bundles/app-homepage-traffic-flood
+    category: application
+  - id: infra-service-restarting
+    bundle: bundles/infra-service-restarting
+    category: infrastructure
+  - id: infra-cache-database-unavailable
+    bundle: bundles/infra-cache-database-unavailable
+    category: infrastructure
+  - id: infra-network-latency
+    bundle: bundles/infra-network-latency
+    category: infrastructure
+  - id: infra-cpu-memory-starvation
+    bundle: bundles/infra-cpu-memory-starvation
+    category: infrastructure
