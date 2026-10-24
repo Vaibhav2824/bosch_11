@@ -1,0 +1,24 @@
+{
+  "decision": "escalate",
+  "summary": "Investigation of 'error alert' did not converge.",
+  "root_cause": null,
+  "confidence": 0.0,
+  "evidence": [],
+  "open_questions": [
+    "Agent hit its step budget; see evidence.jsonl for what it looked at."
+  ],
+  "calibration_note": "no valid diagnosis submitted",
+  "alert": "error alert",
+  "evidence_ids_collected": [
+    "ev_1",
+    "ev_2",
+    "ev_3",
+    "ev_4",
+    "ev_5",
+    "ev_6",
+    "ev_7",
+    "ev_8",
+    "ev_9",
+    "ev_10"
+  ]
+}

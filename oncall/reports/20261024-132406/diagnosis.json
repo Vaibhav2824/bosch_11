@@ -1,0 +1,75 @@
+{
+  "decision": "diagnosed",
+  "summary": "The shop is experiencing a high error rate because the product-catalog service has crashed/exited, causing dependent services like checkout and recommendation to fail.",
+  "root_cause": {
+    "component": "product-catalog",
+    "cause": "The product-catalog service has exited, making it unavailable to other services."
+  },
+  "confidence": 0.8,
+  "evidence": [
+    {
+      "evidence_id": "ev_3",
+      "quote": "\"status\": \"exited\"",
+      "why": "The product-catalog container has stopped running.",
+      "source": "containers"
+    },
+    {
+      "evidence_id": "ev_3",
+      "quote": "\"health\": \"unhealthy\"",
+      "why": "The product-catalog container is reported as unhealthy.",
+      "source": "containers"
+    },
+    {
+      "evidence_id": "ev_2",
+      "quote": "\"error_message\": \"product-catalog: No address associated with hostname\"",
+      "why": "Downstream services like recommendation cannot resolve or connect to product-catalog.",
+      "source": "traces"
+    },
+    {
+      "evidence_id": "ev_4",
+      "quote": "\"error_message\": \"connection error: desc = \\\"transport: Error while dialing: dial tcp 172.23.0.24:3550: connect: no route to host\\\"\"",
+      "why": "Checkout service is failing because it cannot reach the product-catalog service.",
+      "source": "traces"
+    }
+  ],
+  "alternatives_ruled_out": [],
+  "proposed_action": {
+    "action": "restart_service",
+    "target": "product-catalog",
+    "reason": "The product-catalog service has exited and is unhealthy, causing cascading failures in checkout, recommendation, and frontend services which depend on it."
+  },
+  "open_questions": [],
+  "timeline": [
+    {
+      "time": "13:24:06",
+      "event": "Alert fired: error rate above threshold on the shop"
+    },
+    {
+      "time": "13:25:00",
+      "event": "Observed high error rates in checkout (66.7%) and recommendation (100%) services."
+    },
+    {
+      "time": "13:25:30",
+      "event": "Traces confirmed failures in calls to ProductCatalogService."
+    },
+    {
+      "time": "13:26:00",
+      "event": "Container health check confirmed product-catalog is in 'exited' state."
+    }
+  ],
+  "confidence_model": 1.0,
+  "evidence_sources": [
+    "containers",
+    "traces"
+  ],
+  "calibration_note": "2 independent source(s) -> confidence capped at 0.8",
+  "alert": "Alert fired: error rate above threshold on the shop",
+  "evidence_ids_collected": [
+    "ev_1",
+    "ev_2",
+    "ev_3",
+    "ev_4",
+    "ev_5",
+    "ev_6"
+  ]
+}
