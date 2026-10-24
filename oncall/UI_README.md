@@ -1,6 +1,6 @@
-# Incident Zero approval UI (template)
+# Incident Zero approval UI
 
-A chat-style approval UI for the on-call agent (stretch goal 4), built from SmoothUI's AI
+A chat-style approval UI for the on-call agent, built from SmoothUI's AI
 components. It shows what the agent did step by step, explains its diagnosis and confidence,
 and lets the on-call human approve, reject or dry-run the proposed fix. It also shows whether
 each OpenTelemetry demo UI is up and links evidence into Jaeger and Grafana.
@@ -11,22 +11,21 @@ variables, and one mapping function translates your agent's JSON.
 ```
 incident_ui/      Python server (stdlib only): config, approval gate, sources, demo stack
 web/              React + SmoothUI front end (build once, the server serves it)
-sample_runs/      three real incidents from our agent, to try it with no agent running
-examples/         mock_agent_api.py: a stand-in agent API with the plan's data model
-tests/            approval gate, server guardrails, mapper (pytest)
-.env.example      every setting with its default
+action_api.py     local Action API: the only write path to the demo
+tests/ui/         approval gate, server guardrails, mapper, Action API (pytest)
 ```
 
-## 1. Try it on the samples (2 minutes)
+## 1. Run it
 
 Needs Python 3.11+ and Node 20+.
 
 ```bash
 cd web && npm install --legacy-peer-deps && npm run build && cd ..
-UI_RUN_DIRS=sample_runs UI_INVESTIGATE=none python -m incident_ui
+python -m incident_ui
 ```
 
-Open http://127.0.0.1:8502. On Windows `cmd`, use `set UI_RUN_DIRS=sample_runs` first.
+Open http://127.0.0.1:8502. By default it lists the agent's `runs/` folders and starts new
+investigations with `oncall_agent.agent:investigate`.
 
 ## 2. Connect your agent
 
@@ -43,7 +42,7 @@ UI_RUN_DIRS=runs,reports UI_INVESTIGATE=oncall_agent.agent:investigate python -m
 alert text, returns the run folder or `{"run_dir": ...}`). Use `none` to hide the alert box.
 If the template folder is not inside your project, also set `UI_AGENT_ROOT` to your project root.
 
-**B. Your agent has an HTTP API** (like the plan's FastAPI service with `/incidents`):
+**B. Your agent has an HTTP API** (for example a FastAPI service with `/incidents`):
 
 ```bash
 UI_SOURCE=http UI_AGENT_API_URL=http://127.0.0.1:8000 \
@@ -53,8 +52,7 @@ UI_AGENT_API_DECIDE=/incidents/{id}/{decision} python -m incident_ui
 Change `UI_AGENT_API_LIST / GET / CREATE / DECIDE` if your paths differ (see `.env.example`).
 With `DECIDE` set, approve and reject are POSTed to your agent with
 `{approver, payload, fingerprint, note}`, so your own state machine moves on. Your agent then
-calls the Action API, not the UI. To see this working first:
-`python examples/mock_agent_api.py` in one terminal, the command above in another.
+calls the Action API, not the UI.
 
 ## 3. If your JSON looks different
 
@@ -63,13 +61,13 @@ It already understands:
 
 - our format (`diagnosis.json` with `decision`, `root_cause{component,cause}`, `evidence[]`,
   `proposed_action{action,target,reason}`);
-- the hackathon plan's model (`state`, `alert{raw}`, `hypothesis{root_cause, affected_component,
+- an incident-API model (`state`, `alert{raw}`, `hypothesis{root_cause, affected_component,
   supporting_evidence[]}`, `action_proposal{action_id, service, explanation, rollback_plan}`,
   `Evidence{tool_name, kind, query, result_summary, deep_link}`);
 - common alternative names (each field tries several, e.g. `quote|excerpt|result_summary`).
 
 If a field shows up empty, add your field name to that `_pick(...)` call. Run `pytest` after.
-`tests/test_sources.py` has a plan-style example to copy for your own format.
+`tests/ui/test_sources.py` has an incident-API example to copy for your own format.
 
 What the UI needs at minimum: an id, the alert text, `decision` (or a state like ESCALATED),
 a root cause and confidence when diagnosed, and a proposed action for there to be anything to
@@ -84,7 +82,7 @@ approve. Steps, evidence, quotes and the report are shown when present.
   evidence links to Grafana. An agent-supplied `deep_link` takes priority.
 - URLs default to the demo behind the frontend proxy on :8080 (`make start` /
   `make start-minimal`). Override with `DEMO_*_URL`.
-- Feature flags are off limits (reading them disqualifies the team). Any flagd or
+- Feature flags are off limits: the agent must reason from telemetry. Any flagd or
   feature-flag URL is refused at startup and stripped from evidence links.
 
 ## Safety
@@ -99,11 +97,10 @@ approve. Steps, evidence, quotes and the report are shown when present.
   `http://127.0.0.1:8090/actions`) with `{incident, approver, payload, fingerprint}`. Start the
   local stand-in with `python action_api.py` (restart_service, throttle_load_generator; refuses
   scale_service, feature flags, unapproved or altered requests; logs to `logs/action_api.jsonl`).
-  Point the URL at the organisers' Action API when you have it; set it empty to record only.
+  Point the URL at a production Action API, or set it empty to record only.
 - **Verify.** After the Action API accepts, the UI polls fresh telemetry (target container
   running and healthy, every service under 2% errors over 2m) until it recovers or
   `UI_VERIFY_TIMEOUT` (360 s) runs out, then logs `verified` or `recovery_unconfirmed`.
-- Add `logs/` and `KILL` to your `.gitignore`.
 
 ## Develop
 
@@ -123,5 +120,4 @@ names it uses the step's `description`/`relevance` from your agent, or "Ran <too
 - Act & verify after approval (polling health until recovered) belongs to the agent; the UI
   shows "waiting for Action API" (runs mode) or your agent's reply (http mode).
 - The http source asks for each incident to build the list (fine for tens, not thousands).
-- Not tested against a live agent with an LLM key from this UI; tested against the samples,
-  the mock agent API and the live demo stack's status endpoints.
+- The http source has only been exercised against a stand-in agent API, not a production one.

@@ -5,7 +5,7 @@ import pytest
 from incident_ui import config, demo_stack
 from incident_ui.sources import RunsSource, normalize
 
-# Shaped like the hackathon plan's data model (Incident / Hypothesis / Evidence / ActionProposal),
+# Shaped like the incident-API data model (Incident / Hypothesis / Evidence / ActionProposal),
 # with different field names from oncall_agent: the mapper has to cope with both.
 PLAN_STYLE = {
     "id": "inc-7",
