@@ -1,0 +1,41 @@
+{
+  "schema": "telemetry-bundle-v0",
+  "incident_id": "sample",
+  "captured_at": "2026-10-23T00:00:00Z",
+  "metrics": {
+    "services": [
+      {
+        "service": "checkout",
+        "rps": 2.0,
+        "error_pct": 42.0,
+        "p95_ms": 820,
+        "baseline_error_pct": 0.5,
+        "baseline_p95_ms": 180
+      }
+    ]
+  },
+  "traces": [
+    {
+      "trace_id": "sample-trace",
+      "service": "checkout",
+      "operation": "PlaceOrder",
+      "status": "error",
+      "message": "dependency unavailable"
+    }
+  ],
+  "logs": [
+    {
+      "service": "checkout",
+      "severity": "error",
+      "message": "dependency unavailable"
+    }
+  ],
+  "containers": [
+    {
+      "service": "checkout",
+      "status": "running",
+      "restart_count": 0,
+      "oom_killed": false
+    }
+  ]
+}

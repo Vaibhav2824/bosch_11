@@ -1,0 +1,30 @@
+{
+  "decision": "diagnosed",
+  "summary": "Checkout is returning elevated errors because a dependency is unavailable.",
+  "root_cause": {
+    "component": "checkout",
+    "cause": "The checkout trace and log both report a dependency unavailable error."
+  },
+  "confidence": 0.8,
+  "evidence": [
+    {
+      "evidence_id": "trace-1",
+      "quote": "dependency unavailable",
+      "why": "The checkout trace reports the failing operation."
+    },
+    {
+      "evidence_id": "log-1",
+      "quote": "dependency unavailable",
+      "why": "The checkout log independently confirms the failure."
+    }
+  ],
+  "alternatives_ruled_out": [],
+  "proposed_action": {
+    "action": "none",
+    "target": "checkout",
+    "reason": "This provisional fixture is read-only.",
+    "rollback": ""
+  },
+  "open_questions": [],
+  "timeline": []
+}

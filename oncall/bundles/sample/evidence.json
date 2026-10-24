@@ -1,0 +1,16 @@
+[
+  {
+    "id": "trace-1",
+    "source": "traces",
+    "query": "sample trace query",
+    "value": "dependency unavailable",
+    "ts": "2026-10-23T00:00:00Z"
+  },
+  {
+    "id": "log-1",
+    "source": "logs",
+    "query": "sample log query",
+    "value": "dependency unavailable",
+    "ts": "2026-10-23T00:00:00Z"
+  }
+]
