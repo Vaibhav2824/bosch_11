@@ -1,0 +1,23 @@
+# Secrets / local env (never commit)
+.env
+.env.*
+!.env.example
+!.env.override
+env.sh
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Local scratch: abandoned earlier repo attempt
+/bosch_11/
